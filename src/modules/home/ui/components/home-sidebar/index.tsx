@@ -4,7 +4,7 @@ import MainSection from './main-section'
 import { Separator } from '@/components/ui/separator'
 import PersonalSection from './personal-section'
 
-const HoneSidebar = () => {
+const HomeSidebar = () => {
   return (
     <Sidebar className='pt-16 z-40 border-none' collapsible='icon'>
         <SidebarContent className='ng-background'>
@@ -16,4 +16,4 @@ const HoneSidebar = () => {
   )
 }
 
-export default HoneSidebar
+export default HomeSidebar
