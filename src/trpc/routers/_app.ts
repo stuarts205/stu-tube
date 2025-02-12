@@ -1,20 +1,8 @@
-import { z } from 'zod';
+import { categoriesRouter } from '@/modules/categories/server/procedures';
 import { baseProcedure, createTRPCRouter, protectedProcedure } from '../init';
-import { auth } from '@clerk/nextjs/server';
 
 export const appRouter = createTRPCRouter({
-  hello: protectedProcedure
-    .input(
-      z.object({
-        text: z.string(),
-      }),
-    )
-    .query((opts) => {
-      console.log({ dbUser: opts.ctx.user });
-      return {
-        greeting: `hello ${opts.input.text}`,
-      };
-    }),
+  categories: categoriesRouter,
 });
 
 export type AppRouter = typeof appRouter;
