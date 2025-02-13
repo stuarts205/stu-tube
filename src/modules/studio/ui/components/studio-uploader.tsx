@@ -18,7 +18,7 @@ const UPLOADER_ID = 'video-uploader'
 const StudioUploader = ({endpoint, onSuccess}: StudioUploaderProps) => {
   return (
     <div>
-        <MuxUploader id={UPLOADER_ID} className='hidden group/uploader' endpoint={endpoint} />
+        <MuxUploader onSuccess={onSuccess} id={UPLOADER_ID} className='hidden group/uploader' endpoint={endpoint} />
         <MuxUploaderDrop muxUploader={UPLOADER_ID} className='group/drop'>
           <div slot='heading' className='flex flex-col items-center gap-6'>
             <div className='flex items-center justify-center gap-2 rounded-full bg-muted h-32 w-32'>
