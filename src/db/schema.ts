@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { integer, pgTable, text, uuid, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { integer, pgTable, pgEnum, text, uuid, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 export const users = pgTable(
     'users', {
@@ -30,6 +30,8 @@ export const categoryRelations = relations(users, ({many}) => ({
     videos: many(videos)
 }))
 
+export const videoVisibility = pgEnum('video_visibility', ['private', 'public'])
+
 export const videos = pgTable(
     "videos", {
         id: uuid('id').primaryKey().defaultRandom(),
@@ -41,6 +43,10 @@ export const videos = pgTable(
         muxPlaybackId: text('mux_playback_id').unique(),
         muxTrackId: text('mux_track_id').unique(),
         muxTrackStatus: text('mux_track_status'),
+        thumbnailUrl: text('thumbnail_url'),
+        previewUrl: text('preview_url'),
+        duration: integer('duration').default(0).notNull(),
+        visibility: videoVisibility('visibility').default('private').notNull(),
         userId: uuid('user_id').references(() => users.id, {
             onDelete: 'cascade'
         }).notNull(),
