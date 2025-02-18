@@ -78,17 +78,17 @@ export const POST = async (request: Request) => {
 
       const utapi = new UTApi();
 
-      const [uploadThumnail, uplloadedPreview] = await utapi.uploadFilesFromUrl([
+      const [uploadThumnail, uploadedPreview] = await utapi.uploadFilesFromUrl([
         tempThumbnailUrl,
         tempPreviewUrl,
       ])
 
-      if(!uploadThumnail.data || !uplloadedPreview.data){
+      if(!uploadThumnail.data || !uploadedPreview.data){
         throw new Response("Error uploading files", { status: 500 });
       }
 
       const {key: thumbnailKey, url: thumbnailUrl} = uploadThumnail.data;
-      const {key: previewKey, url: previewUrl} = uplloadedPreview.data;
+      const {key: previewKey, url: previewUrl} = uploadedPreview.data;
 
       await db
         .update(videos)
