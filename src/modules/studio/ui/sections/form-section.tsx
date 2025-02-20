@@ -73,15 +73,15 @@ const FormSectionSkeleton = () => {
       <div className="flex items-center justify-between mb-6">
         <div className="space-y-2">
           <Skeleton className="h-7 w-32" />
-          <Skeleton className="h-4 w-40" />  
+          <Skeleton className="h-4 w-40" />
         </div>
-        <Skeleton className="h-9 w-24" />  
+        <Skeleton className="h-9 w-24" />
       </div>
-      <div className='grid grid-cols-1 lg:grid-cols-5 gap-6'>
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         <div className="space-y-8 lg:col-span-3">
           <div className="space-y-2">
             <Skeleton className="h-5 w-16" />
-            <Skeleton className="h-10 w-full" />  
+            <Skeleton className="h-10 w-full" />
           </div>
           <div className="space-y-2">
             <Skeleton className="h-5 w-20" />
@@ -119,7 +119,8 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
   const utils = trpc.useUtils();
 
   const [thumbnailModalOpen, setThumbnailModalOpen] = useState(false);
-  const [thumbnailGenerateModalOpen, setThumbnailGenerateModalOpen] = useState(false);
+  const [thumbnailGenerateModalOpen, setThumbnailGenerateModalOpen] =
+    useState(false);
 
   const [video] = trpc.studio.getOne.useSuspenseQuery({ id: videoId });
   const [categories] = trpc.categories.getMany.useSuspenseQuery();
@@ -155,7 +156,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
     onError: () => {
       toast.error("Something went wrong");
     },
-  });  
+  });
 
   const generateTitle = trpc.videos.generateThumbnail.useMutation({
     onSuccess: () => {
@@ -203,7 +204,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
 
   return (
     <>
-    <ThumbnailGenerateModal
+      <ThumbnailGenerateModal
         open={thumbnailGenerateModalOpen}
         onOpenChange={setThumbnailGenerateModalOpen}
         videoId={videoId}
@@ -223,7 +224,10 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
               </p>
             </div>
             <div className="flex items-center gap-x-2">
-              <Button type="submit" disabled={update.isPending || !form.formState.isDirty}>
+              <Button
+                type="submit"
+                disabled={update.isPending || !form.formState.isDirty}
+              >
                 Save
               </Button>
               <DropdownMenu>
@@ -258,10 +262,12 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                           type="button"
                           variant="outline"
                           className="rounded-full size-6 [&_svg]:size-3"
-                          onClick={() => generateTitle.mutate({
-                            id: videoId,
-                            prompt: ""
-                          })}
+                          onClick={() =>
+                            generateTitle.mutate({
+                              id: videoId,
+                              prompt: "",
+                            })
+                          }
                           disabled={
                             generateTitle.isPending || !video.muxTrackId
                           }
