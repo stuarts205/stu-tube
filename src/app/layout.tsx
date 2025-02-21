@@ -23,10 +23,10 @@ export default function RootLayout({
     <ClerkProvider afterSignOutUrl="/">
       <html suppressHydrationWarning lang="en">
         <body className={inter.className}>
-          <TRPCProvider>
-            <Toaster />
+          <TRPCProvider>            
             {children}
           </TRPCProvider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
