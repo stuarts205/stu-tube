@@ -1,0 +1,19 @@
+<svg
+  width="200"
+  height="200"
+  viewBox="0 0 200 200"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+>
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="100" fill="#E0E0E0" />
+
+  <!-- Head -->
+  <circle cx="100" cy="70" r="40" fill="#B0B0B0" />
+
+  <!-- Shoulders -->
+  <path
+    d="M50 170 C70 120, 130 120, 150 170"
+    fill="#B0B0B0"
+  />
+</svg>

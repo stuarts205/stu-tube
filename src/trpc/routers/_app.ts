@@ -2,9 +2,10 @@ import { categoriesRouter } from '@/modules/categories/server/procedures';
 import { studioRouter } from '@/modules/studio/server/procedures';
 import { videosRouter } from '@/modules/videos/server/procedures';
 import { createTRPCRouter } from '../init';
-import { videoViewsRouter } from '@/modules/video-views/procedures';
+import { videoViewsRouter } from '@/modules/video-views/server/procedures';
 import { videoReactionsRouter } from '@/modules/video-reactions/procedures';
 import { subscriptionsRouter } from '@/modules/subscriptions/server/procedures';
+import { commentsRouter } from '@/modules/comments/server/procedures';
 
 export const appRouter = createTRPCRouter({
   studio: studioRouter,
@@ -12,7 +13,8 @@ export const appRouter = createTRPCRouter({
   categories: categoriesRouter,
   videoViews: videoViewsRouter,
   videoReactions: videoReactionsRouter,
-  subscriptions: subscriptionsRouter
+  subscriptions: subscriptionsRouter,
+  comments: commentsRouter
 });
 
 export type AppRouter = typeof appRouter;
