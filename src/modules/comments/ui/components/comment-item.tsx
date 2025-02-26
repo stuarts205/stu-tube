@@ -1,8 +1,8 @@
 import React from "react";
 import { CommentsGetManyOutput } from "../../types";
-import { Link } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import UserAvatar from "@/components/user-avatar";
+import Link from "next/link";
 
 interface CommentItemProps {
   comment: CommentsGetManyOutput[number];
@@ -25,7 +25,7 @@ const CommentItem = ({ comment }: CommentItemProps) => {
               <span className="font-medium text-sm pb-0.5">
                 {comment.user.name}
               </span>
-              <span>{formatDistanceToNow(comment.updatedAt, {addSuffix: true})}</span>
+              <span className='text-xs text-muted-foreground'>{formatDistanceToNow(comment.updatedAt, {addSuffix: true})}</span>
             </div>
           </Link>
           <p className='text-sm'>{comment.value}</p>
