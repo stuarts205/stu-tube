@@ -3,9 +3,10 @@ import { studioRouter } from '@/modules/studio/server/procedures';
 import { videosRouter } from '@/modules/videos/server/procedures';
 import { createTRPCRouter } from '../init';
 import { videoViewsRouter } from '@/modules/video-views/server/procedures';
-import { videoReactionsRouter } from '@/modules/video-reactions/procedures';
+import { videoReactionsRouter } from '@/modules/video-reactions/server/procedures';
 import { subscriptionsRouter } from '@/modules/subscriptions/server/procedures';
 import { commentsRouter } from '@/modules/comments/server/procedures';
+import { commentsReactionsRouter } from '@/modules/comment-reactions/server/procedures';
 
 export const appRouter = createTRPCRouter({
   studio: studioRouter,
@@ -14,7 +15,8 @@ export const appRouter = createTRPCRouter({
   videoViews: videoViewsRouter,
   videoReactions: videoReactionsRouter,
   subscriptions: subscriptionsRouter,
-  comments: commentsRouter
+  comments: commentsRouter,
+  commentsReactions: commentsReactionsRouter,
 });
 
 export type AppRouter = typeof appRouter;
