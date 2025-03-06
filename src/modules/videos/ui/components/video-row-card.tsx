@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { VideoGetManyOutput } from "../../types";
-import VideoThumbnail from "./video-thumbnail";
+import VideoThumbnail, { VideoThumbnailSkeleton } from "./video-thumbnail";
 import UserAvatar from "@/components/user-avatar";
 import UserInfo from "@/modules/users/ui/components/user-info";
 import VideoMenu from "./video-menu";
@@ -44,22 +44,51 @@ interface VideoRowCardProps extends VariantProps<typeof videoRowCardVariants> {
   onRemove?: () => void;
 }
 
-export const VideoRowCardSkeleton = () => {
-  return <div><Skeleton /></div>;
+export const VideoRowCardSkeleton = ({size}: VariantProps<typeof videoRowCardVariants>) => {
+  return (
+    <div className={videoRowCardVariants({ size })}>
+      <div className={thumbnailVariants({ size })}>
+        <VideoThumbnailSkeleton />
+      </div>
+
+      <div className="flex-1 min-w-0">
+        <div className="flex justify-between gap-x-2">
+          <div className='flex-1 min-w-0'>
+            <Skeleton className={cn(
+              'h-5 w-[40%]',
+              size === 'compact' && 'h-4 w-[40%]'
+            )} />
+            {size == 'default' && (
+              <>
+                <Skeleton className='h-4 w-[20%] mt-1' />
+                <div className="flex items-center gap-2 my-3">
+                  <Skeleton className='size-8 rounded-full' />
+                  <Skeleton className='h-4 w-24' />
+                </div>
+              </>
+            )}
+            {size === 'compact' && (
+              <Skeleton className='h-4 w-[50%] mt-1' />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const VideoRowCard = ({ data, size, onRemove }: VideoRowCardProps) => {
-    const compactViews = useMemo(() => {
-        return Intl.NumberFormat('en', {
-            notation: 'compact',            
-        }).format(data.viewCount)
-    }, [data.viewCount])
+  const compactViews = useMemo(() => {
+    return Intl.NumberFormat("en", {
+      notation: "compact",
+    }).format(data.viewCount);
+  }, [data.viewCount]);
 
-    const compactLikes = useMemo(() => {
-        return Intl.NumberFormat('en', {
-            notation: 'compact',            
-        }).format(data.likeCount)
-    }, [data.likeCount])
+  const compactLikes = useMemo(() => {
+    return Intl.NumberFormat("en", {
+      notation: "compact",
+    }).format(data.likeCount);
+  }, [data.likeCount]);
 
   return (
     <div className={videoRowCardVariants({ size })}>
@@ -84,8 +113,7 @@ const VideoRowCard = ({ data, size, onRemove }: VideoRowCardProps) => {
             </h3>
             {size === "default" && (
               <p className="text-xs text-muted-foreground mt-1">
-                {compactViews} views <span>&bull;</span> {compactLikes}{" "}
-                likes
+                {compactViews} views <span>&bull;</span> {compactLikes} likes
               </p>
             )}
             {size === "default" && (

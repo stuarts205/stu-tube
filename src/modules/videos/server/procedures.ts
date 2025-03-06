@@ -45,21 +45,26 @@ export const videosRouter = createTRPCRouter({
           .where(inArray(videoReactions.userId, userId ? [userId] : []))
       );
 
-      const viewSubscriptions = db.$with('view_subscriptions').as(
+      const viewSubscriptions = db.$with("view_subscriptions").as(
         db
           .select()
           .from(subscriptions)
           .where(inArray(subscriptions.viewerId, userId ? [userId] : []))
-      )
+      );
 
       const [existingVideo] = await db
-      .with(viewerReactions, viewSubscriptions)
+        .with(viewerReactions, viewSubscriptions)
         .select({
           ...getTableColumns(videos),
           user: {
             ...getTableColumns(users),
-            subsciberCount: db.$count(subscriptions, eq(subscriptions.creatorId, users.id)),
-            viewerSubscribed: isNotNull(viewSubscriptions.viewerId).mapWith(Boolean),
+            subsciberCount: db.$count(
+              subscriptions,
+              eq(subscriptions.creatorId, users.id)
+            ),
+            viewerSubscribed: isNotNull(viewSubscriptions.viewerId).mapWith(
+              Boolean
+            ),
           },
           viewCount: db.$count(videoViews, eq(videoViews.videoId, videos.id)),
           likeCount: db.$count(
@@ -82,12 +87,12 @@ export const videosRouter = createTRPCRouter({
         .innerJoin(users, eq(videos.userId, users.id))
         .leftJoin(viewerReactions, eq(viewerReactions.videoId, videos.id))
         .leftJoin(viewSubscriptions, eq(viewSubscriptions.creatorId, users.id))
-        .where(eq(videos.id, input.id))
-        // .groupBy(
-        //   videos.id,
-        //   users.id,
-        //   viewerReactions.type,
-        // )
+        .where(eq(videos.id, input.id));
+      // .groupBy(
+      //   videos.id,
+      //   users.id,
+      //   viewerReactions.type,
+      // )
 
       if (!existingVideo) {
         throw new TRPCError({
@@ -129,6 +134,65 @@ export const videosRouter = createTRPCRouter({
         body: { userId, videoId: input.id, prompt: input.prompt },
       });
       return workflowRunId;
+    }),
+  revalidate: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id: userId } = ctx.user;
+      const [existingVideo] = await db
+        .select()
+        .from(videos)
+        .where(and(eq(videos.id, input.id), eq(videos.userId, userId)));
+
+      if (!existingVideo) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Video not found",
+        });
+      }
+
+      if (!existingVideo.muxUploadId) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Video not ready",
+        });
+      }
+
+      const upload = await mux.video.uploads.retrieve(
+        existingVideo.muxUploadId
+      );
+
+      if (!upload || !upload.asset_id) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Video not ready",
+        });
+      }
+
+      const asset = await mux.video.assets.retrieve(upload.asset_id);
+
+      if (!asset) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Video not ready",
+        });
+      }
+
+      const playbackId = asset.playback_ids ? asset.playback_ids[0].id : null;
+      const duration = asset.duration ? Math.round(asset.duration * 1000) : 0;
+
+      const [updateVideo] = await db
+        .update(videos)
+        .set({
+          muxStatus: asset.status,
+          muxPlaybackId: playbackId,
+          muxAssetId: asset.id,
+          duration,
+        })
+        .where(and(eq(videos.id, input.id), eq(videos.userId, userId)))
+        .returning();
+
+      return updateVideo;
     }),
   restoreThumbnial: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
