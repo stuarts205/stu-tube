@@ -19,12 +19,12 @@ const items = [
   },
   {
     title: "Subscriptions",
-    url: "/feed/subscriptions",
+    url: "/feed/subscribed",
     icon: PlaySquareIcon,
     auth: true,
   },
   {
-    title: "Treanding",
+    title: "Trending",
     url: "/feed/trending",
     icon: FlameIcon,
   },
