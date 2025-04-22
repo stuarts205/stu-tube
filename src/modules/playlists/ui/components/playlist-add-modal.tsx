@@ -3,7 +3,7 @@ import ResponsiveModal from '@/components/responsive-modal'
 import { Button } from '@/components/ui/button'
 import { DEFAULT_LIMIT } from '@/constants'
 import { trpc } from '@/trpc/client'
-import { Loader2Icon, SquareCheck, SquareCheckIcon, SquareIcon } from 'lucide-react'
+import { Loader2Icon, SquareCheckIcon, SquareIcon } from 'lucide-react'
 import React from 'react'
 import { toast } from 'sonner'
 

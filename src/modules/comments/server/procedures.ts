@@ -19,7 +19,6 @@ import {
   isNotNull,
 } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
-import { Select } from "@radix-ui/react-select";
 
 export const commentsRouter = createTRPCRouter({
   remove: protectedProcedure

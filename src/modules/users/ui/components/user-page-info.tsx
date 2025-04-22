@@ -4,7 +4,6 @@ import UserAvatar from "@/components/user-avatar";
 import { useAuth, useClerk } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Sub } from "@radix-ui/react-dropdown-menu";
 import SubscriptionButton from "@/modules/subscriptions/ui/components/subscription-button";
 import { useSubscription } from "@/modules/subscriptions/hooks/use-subscription";
 import { cn } from "@/lib/utils";
@@ -76,7 +75,7 @@ const UserPageInfo = ({ user }: UserPageInfoProps) => {
             asChild
             className="w-full mt-3 rounded-full"
           >
-            <Link href="/studio">Go to studio</Link>
+            <Link prefetch  href="/studio">Go to studio</Link>
           </Button>
         ) : (
           <SubscriptionButton
@@ -111,7 +110,7 @@ const UserPageInfo = ({ user }: UserPageInfoProps) => {
           </div>
           {userId === user.clerkId ? (
             <Button variant="secondary" asChild className="mt-3 rounded-full">
-              <Link href="/studio">Go to studio</Link>
+              <Link prefetch  href="/studio">Go to studio</Link>
             </Button>
           ) : (
             <SubscriptionButton

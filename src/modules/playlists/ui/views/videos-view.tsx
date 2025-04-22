@@ -1,6 +1,4 @@
 import React from 'react'
-import HistoryVideosSection from '../sections/history-vidoes-section'
-import { Play } from 'next/font/google'
 import PlaylistHeaderSection from '../sections/playlist-header-section'
 import VideosSection from '../sections/vidoes-section'
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import HistoryVideosSection from '../sections/history-vidoes-section'
 import LikedVideosSection from '../sections/liked-vidoes-section'
 
 const HistoryView = () => {

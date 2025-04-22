@@ -3,14 +3,13 @@ import { Button } from "@/components/ui/button";
 import { ClapperboardIcon, UserCircleIcon, UserIcon } from "lucide-react";
 import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import React from "react";
-import Link from "next/link";
 
 const AuthBtton = () => {
   return (
     <>
       <SignedIn>
         {/* <Button asChild variant='secondary'>
-          <Link href='/studio'>
+          <Link prefetch  href='/studio'>
             <ClapperboardIcon />
             Studio
           </Link>

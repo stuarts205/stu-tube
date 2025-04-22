@@ -9,7 +9,7 @@ import {
 import { FlameIcon, HomeIcon, PlaySquareIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { SignedIn, useAuth, useClerk } from "@clerk/nextjs";
+import { useAuth, useClerk } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 
 const items = [
@@ -53,7 +53,7 @@ const MainSection = () => {
                   }
                 }}
               >
-                <Link className="flex items-center gap-4" href={item.url}>
+                <Link prefetch  className="flex items-center gap-4" href={item.url}>
                   <item.icon /> 
                   <span className="text-sm">{item.title}</span>
                 </Link>

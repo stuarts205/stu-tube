@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { VideoGetManyOutput } from "../../types";
 import Link from 'next/link';
 import VideoThumbnail, { VideoThumbnailSkeleton } from './video-thumbnail';
@@ -22,7 +22,7 @@ const VideoGridCard = ({data, onRemove}: VideoGridCardProps) => {
 
   return (
     <div className='flex flex-col gap-2 w-full group'>
-        <Link href={`/videos/${data.id}`}>
+        <Link prefetch  href={`/videos/${data.id}`}>
             <VideoThumbnail
                 imageUrl={data.thumbnailUrl}
                 previewUrl={data.previewUrl}

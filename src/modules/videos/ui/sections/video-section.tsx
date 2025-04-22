@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
-import React, { Suspense, use } from "react";
+import React, { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import VideoPlayer, { VideoPlayerSkeleton } from "../components/video-player";
 import VideoBanner from "../components/video-banner";

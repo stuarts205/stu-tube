@@ -1,7 +1,6 @@
 import { toast } from 'sonner'
 import { useClerk } from '@clerk/nextjs'
 import { trpc } from '@/trpc/client'
-import { of } from 'svix/dist/openapi/rxjsStub'
 
 interface UserSubscriptionProps {
     userId: string

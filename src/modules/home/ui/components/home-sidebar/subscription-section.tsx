@@ -8,7 +8,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import React, { use } from "react";
+import React from "react";
 import { usePathname } from "next/navigation";
 import { trpc } from "@/trpc/client";
 import { DEFAULT_LIMIT } from "@/constants";
@@ -52,7 +52,7 @@ const SubscriptionSection = () => {
                 asChild
                 isActive={pathName === `/users/${subscription.user.id}`}
               >
-                <Link className="flex items-center gap-4" href={`/users/${subscription.user.id}`}>
+                <Link prefetch  className="flex items-center gap-4" href={`/users/${subscription.user.id}`}>
                   <UserAvatar
                     size='xs'
                     imageUrl={subscription.user.imageUrl}
@@ -66,7 +66,7 @@ const SubscriptionSection = () => {
           {!isLoading && (
             <SidebarMenuItem>
               <SidebarMenuButton asChild isActive={pathName === '/subscriptions'}>
-              <Link href='/subscriptions' className="flex items-center gap-4">
+              <Link prefetch  href='/subscriptions' className="flex items-center gap-4">
                 <ListIcon className="size-4" />
                 <span className="text-sm">View all subscriptions</span>
               </Link>

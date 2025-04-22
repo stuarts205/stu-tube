@@ -9,7 +9,7 @@ interface CategoriesSectionProps {
     categoryId?: string
 }
 
-export const CategoriesSection = ({categoryId}: CategoriesSectionProps) => {
+export const CategoriesSection = () => {
     return (
         <Suspense fallback={<FilterCarousel data={[]} isLoading onSelect={() => {}} />}>
             <ErrorBoundary fallback={<p>Error...</p>}>

@@ -10,7 +10,6 @@ import {
 import { trpc } from '@/trpc/client'
 import React from 'react'
 import { z } from 'zod'
-import { Textarea } from '@/components/ui/textarea'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'

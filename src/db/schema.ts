@@ -46,8 +46,8 @@ export const playlistVideoRelations = relations(playlistVideos, ({ one }) => ({
   video: one(videos, {
     fields: [playlistVideos.videoId],
     references: [videos.id],
-  })
-}))
+  }),
+}));
 
 export const playlists = pgTable("playlists", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -65,8 +65,8 @@ export const playlistRelations = relations(playlists, ({ one, many }) => ({
     fields: [playlists.userId],
     references: [users.id],
   }),
-  playlistVideos: many(playlistVideos)
-}))
+  playlistVideos: many(playlistVideos),
+}));
 
 export const users = pgTable(
   "users",
@@ -95,7 +95,7 @@ export const userRelations = relations(users, ({ many }) => ({
   }),
   comments: many(comments),
   commentReactions: many(commentReactions),
-  playlists: many(playlists)
+  playlists: many(playlists),
 }));
 
 export const subscriptions = pgTable(
@@ -196,7 +196,7 @@ export const videoRelations = relations(videos, ({ one, many }) => ({
   views: many(videoViews),
   reactions: many(videoReactions),
   comments: many(comments),
-  playlistsVideos: many(playlistVideos)
+  playlistsVideos: many(playlistVideos),
 }));
 
 export const comments = pgTable(

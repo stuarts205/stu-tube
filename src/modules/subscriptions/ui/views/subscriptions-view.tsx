@@ -1,5 +1,4 @@
 import React from 'react'
-import HistoryVideosSection from '../sections/subscriptions-section'
 import SubscriptionsSection from '../sections/subscriptions-section'
 
 const SubscriptionsView = () => {
