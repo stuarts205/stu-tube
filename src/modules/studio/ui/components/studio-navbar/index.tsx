@@ -11,17 +11,17 @@ const StudioNavbar = () => {
       <div className="flex items-center gap-4 w-full">
         <div className="flex items-center flex-shrink-0">
           <SidebarTrigger />
-          <Link href="/studio">
+          <Link href="/studio" className="hidden md:block">
             <div className="flex items-center gap-1 p-4">
               <Image src="/logo.svg" alt="logo" width={32} height={32} />
-              <p className='text-2xl font-semibold tracking-tighter'>Studio</p>
+              <p className="text-2xl font-semibold tracking-tighter">Studio</p>
             </div>
           </Link>
         </div>
         <div className="flex-1" />
         <div className="flex-shrink-0 items-center flex gap-4">
           <StudioUploadModal />
-            <AuthButton />
+          <AuthButton />
         </div>
       </div>
     </nav>
