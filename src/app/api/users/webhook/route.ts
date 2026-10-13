@@ -5,6 +5,9 @@ import { db } from '@/db'
 import { users } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 
+const fullName = (data: { first_name: string | null; last_name: string | null; username?: string | null }) =>
+  [data.first_name, data.last_name].filter(Boolean).join(' ') || data.username || 'Unknown'
+
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.CLERK_SIGNING_SECRET
 
@@ -52,12 +55,13 @@ export async function POST(req: Request) {
 
   if(eventType === 'user.created') {    
     const data = evt.data
+    // The user row may already exist (created on first authenticated request).
     await db.insert(users).values({
         clerkId: data.id,
-        name: `${data.first_name} ${data.last_name}`,
+        name: fullName(data),
         imageUrl: data.image_url
-    })
-  }  
+    }).onConflictDoNothing({ target: users.clerkId })
+  }
 
   if(eventType === 'user.deleted') {
     const {data} = evt
@@ -78,7 +82,7 @@ export async function POST(req: Request) {
     }
 
     await db.update(users).set({
-        name: `${data.first_name} ${data.last_name}`,
+        name: fullName(data),
         imageUrl: data.image_url
     }).where(eq(users.clerkId, data.id))
   }
