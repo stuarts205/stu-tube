@@ -1,13 +1,29 @@
 import type { Config } from "tailwindcss";
-import { withUt } from 'uploadthing/tw'
+import plugin from "tailwindcss/plugin";
 
-export default withUt({
+// Inlined from `uploadthing/tw` (withUt / uploadthingPlugin). That module calls
+// require.resolve() with a templated package name, which Turbopack can't
+// analyze statically: it then tries to compile every file under @uploadthing/*
+// (including .d.cts type files) and fails the build.
+const uploadthingPlugin = plugin(({ addVariant }) => {
+    addVariant("ut-button", '&>*[data-ut-element="button"]');
+    addVariant("ut-allowed-content", '&>*[data-ut-element="allowed-content"]');
+    addVariant("ut-label", '&>*[data-ut-element="label"]');
+    addVariant("ut-upload-icon", '&>*[data-ut-element="upload-icon"]');
+    addVariant("ut-clear-btn", '&>*[data-ut-element="clear-btn"]');
+    addVariant("ut-readying", '&[data-state="readying"]');
+    addVariant("ut-ready", '&[data-state="ready"]');
+    addVariant("ut-uploading", '&[data-state="uploading"]');
+});
+
+export default {
     darkMode: ["class"],
     content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
 	"./src/modules/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@uploadthing/react/dist/**/*.{js,mjs}",
   ],
   theme: {
   	extend: {
@@ -92,5 +108,5 @@ export default withUt({
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
-}) satisfies Config;
+  plugins: [require("tailwindcss-animate"), uploadthingPlugin],
+} satisfies Config;
